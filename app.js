@@ -36,8 +36,12 @@ app.get('/', (req, res) => {
 app.post('/todo', (req, res) => {
   let task = req.body.task;
   console.log(task);
-  ToDo.create({ task, complete: false, date: new Date().toDateString() });
-  res.redirect('/');
+  if (task) {
+    ToDo.create({ task, complete: false, date: new Date().toDateString() });
+    res.redirect('/');
+  } else {
+    res.redirect('/');
+  }
 });
 
 // UPDATE ROUTE
