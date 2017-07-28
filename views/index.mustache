@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>To Do List</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body>
+    <h1>Your To Do List</h1>
+    <div class="container">
+      <section class="add-todo">
+        <form class="todo-form" action="/todo" method="POST">
+          <input id="add-todo-input" type="text" name="task" placeholder="Add To Do..." autofocus />
+          <button class="add-btn" type="submit" id="submit">Add ToDo</button>
+        </form>
+      </section>
+      <section class="incomplete">
+        <ul>
+          {{ #list }}
+          {{ ^complete }}
+          <li><form action="/task/{{ _id }}?_method=PUT" method="POST">
+            <button class="complete-btn" type="submit">Mark As Complete</button><strong>{{ task }}</strong> - Date Added: {{ date }}
+          </form></li>
+          {{ /complete }}
+          {{ /list }}
+        </ul>
+      </section>
+      <section class="complete">
+        <h2>Completed Tasks</h2>
+        <ul>
+          {{ #list }}
+          {{ #complete }}
+          <li><form action="/task/{{ _id }}/delete?_method=DELETE" method="POST">
+            <button class="delete-btn" type="submit"><i class="fa fa-trash"></i></button><strong>{{ task }}</strong> - Date Completed: {{ date }}
+          </form></li>
+          {{ /complete }}
+          {{ /list }}
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>
